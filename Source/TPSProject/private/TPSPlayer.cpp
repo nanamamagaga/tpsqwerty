@@ -11,6 +11,7 @@
 #include "TPSProjectGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include <GameFramework/CharacterMovementComponent.h>
+#include "Particles/ParticleSystemComponent.h"
 
 ATPSPlayer::ATPSPlayer()
 {
@@ -48,6 +49,7 @@ ATPSPlayer::ATPSPlayer()
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
 	// 4-1. 부모 컴포넌트를 Mesh 컴포넌트로 설정
 	gunMeshComp->SetupAttachment(GetMesh());
+
 }
 
 // Called when the game starts or when spawned
@@ -70,7 +72,7 @@ void ATPSPlayer::BeginPlay()
 	ATPSProjectGameModeBase* currentGameMode = Cast<ATPSProjectGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (currentGameMode != nullptr)
 	{
-		//currentGameMode->ShowStart();
+		currentGameMode->ShowStart();
 	}
 	
 }
@@ -79,6 +81,8 @@ void ATPSPlayer::BeginPlay()
 void ATPSPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	// 스킬
 
 	if (W == 0 && E == 0 && R == 0)
 		Move();
@@ -102,8 +106,19 @@ void ATPSPlayer::Tick(float DeltaTime)
 		FVector dir = FTransform(GetControlRotation()).TransformVector(direction);
 		// 2. 정규화
 		dir.Normalize();
+
+		// 파티클
+		// 이동하기 전 위치에 파티클이 생성된다.
+		FVector nowLocation = GetActorLocation();
+		// 파티클 인스턴스 생성
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), E_Particle, nowLocation);
+
 		// 3. 이동할 위치 좌표를 구한다(p = p0 + vt).
 		FVector newLocation = GetActorLocation() + dir * 1000;
+
+		//파티클 인스턴스 생성
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), E_Particle, newLocation);
+
 		// 4. 현재 액터의 위치 좌표를 앞에서 구한 새 좌표로 갱신한다.
 		SetActorLocation(newLocation, true);
 
@@ -117,8 +132,19 @@ void ATPSPlayer::Tick(float DeltaTime)
 		FVector dir = FTransform(GetControlRotation()).TransformVector(direction);
 		// 2. 정규화
 		dir.Normalize();
+
+		// 파티클
+		// 이동하기 전 위치에 파티클이 생성된다.
+		FVector nowLocation = GetActorLocation();
+		// 파티클 인스턴스 생성
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), R_Particle, nowLocation);
+
 		// 3. 이동할 위치 좌표를 구한다(p = p0 + vt).
 		FVector newLocation = GetActorLocation() + dir * 70;
+
+		//파티클 인스턴스 생성
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), R_Particle, newLocation);
+
 		// 4. 현재 액터의 위치 좌표를 앞에서 구한 새 좌표로 갱신한다.
 		SetActorLocation(newLocation, true);
 
@@ -176,6 +202,9 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("R_Skill"), IE_Pressed, this, &ATPSPlayer::R1_Skill);
 	PlayerInputComponent->BindAction(TEXT("R_Skill"), IE_Released, this, &ATPSPlayer::R2_Skill);
 
+	// 아이템
+	PlayerInputComponent->BindAction(TEXT("item1"), IE_Pressed, this, &ATPSPlayer::item1);
+	PlayerInputComponent->BindAction(TEXT("item2"), IE_Pressed, this, &ATPSPlayer::item2);
 }
 
 void ATPSPlayer::Turn(float value)
@@ -364,4 +393,18 @@ void ATPSPlayer::R1_Skill()
 void ATPSPlayer::R2_Skill()
 {
 	R = 0;
+}
+void ATPSPlayer::item1()
+{
+	if (i1 <= 3) {
+		UE_LOG(LogTemp, Display, TEXT("HP up"));
+		i1++;
+	}
+}
+void ATPSPlayer::item2()
+{
+	if (i2 <= 3) {
+		UE_LOG(LogTemp, Display, TEXT("Enemy Stun!"));
+		i2++;
+	}
 }

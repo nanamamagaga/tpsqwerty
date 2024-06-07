@@ -101,6 +101,8 @@ public:
 	void ChangeToSniperGun();
 	// 스나이퍼 조준
 	void SniperAim();
+
+	// 스킬 & 아이템
 	// Q
 	void Q_Skill();
 	// W
@@ -116,4 +118,26 @@ public:
 	void R1_Skill();
 	void R2_Skill();
 	int32 R = 0;
+	// 아이템 1
+	void item1();
+	int32 i1 = 0;
+	// 아이템 2
+	void item2();
+	int32 i2 = 0;
+
+
+	// 파티클
+
+	UPROPERTY(EditAnywhere, Category = "SkillEffects")
+	UParticleSystem* Q_Particle;
+
+	UPROPERTY(EditAnywhere, Category = "SkillEffects")
+	UParticleSystem* W_Particle;
+
+	UPROPERTY(EditAnywhere, Category = "SkillEffects")
+	UParticleSystem* E_Particle;
+
+	UPROPERTY(EditAnywhere, Category = "SkillEffects")
+	UParticleSystem* R_Particle;
+
 };
