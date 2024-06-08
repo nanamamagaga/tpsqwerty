@@ -5,6 +5,8 @@
 #include "TPSProject.h"
 #include "StartWidget.h"
 #include "NextPageWidget.h"
+#include "BossWidget.h"
+#include "SkillWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
@@ -41,5 +43,30 @@ void ATPSProjectGameModeBase::ShowNext()
 	{
 		nextUI->AddToViewport();
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+	}
+}
+
+
+void ATPSProjectGameModeBase::ShowBoss()
+{
+	if (bossWidget != nullptr)
+	{
+		bossUI = CreateWidget<UBossWidget>(GetWorld(), bossWidget);
+	}
+	if (bossUI != nullptr)
+	{
+		bossUI->AddToViewport();
+	}
+}
+
+void ATPSProjectGameModeBase::ShowSkill()
+{
+	if (skillWidget != nullptr)
+	{
+		skillUI = CreateWidget<USkillWidget>(GetWorld(), skillWidget);
+	}
+	if (skillUI != nullptr)
+	{
+		skillUI->AddToViewport();
 	}
 }

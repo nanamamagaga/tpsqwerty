@@ -4,8 +4,6 @@
 #include "BossWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "TPSProjectGameModeBase.h"
-#include "Enemy.h"
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
 

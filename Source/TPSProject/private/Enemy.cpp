@@ -2,6 +2,7 @@
 #include "EnemyFSM.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "UObject/ConstructorHelpers.h"
+#include "TPSProjectGameModeBase.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -27,6 +28,12 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
     Super::BeginPlay();
+
+    ATPSProjectGameModeBase* currentGameMode = Cast<ATPSProjectGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (currentGameMode != nullptr)
+    {
+        currentGameMode->ShowBoss();
+    }
 }
 
 // Called every frame

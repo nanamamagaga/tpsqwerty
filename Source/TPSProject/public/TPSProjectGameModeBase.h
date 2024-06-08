@@ -26,11 +26,11 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UBossWidget> bossWidget;
-
-	//void UpdateProgressBar(float Value);
+	void ShowBoss();
 
 	UPROPERTY(EditAnywhere)
-	class UBossWidget* ProgressBarWidget;
+	TSubclassOf<class USkillWidget> skillWidget;
+	void ShowSkill();
 
 protected:
 	//virtual void BeginPlay() override;
@@ -39,6 +39,8 @@ public:
 
 	class UStartWidget* startUI;
 	class UNextPageWidget* nextUI;
+	class UBossWidget* bossUI;
+	class USkillWidget* skillUI;
 	ATPSProjectGameModeBase();
 
 };

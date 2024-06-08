@@ -23,4 +23,7 @@ void UStartWidget::Start()
 	UGameplayStatics::SetGamePaused(GetWorld(), false);
 	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
 
+	GameMode->ShowSkill();
+
+
 }
