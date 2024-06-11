@@ -28,11 +28,14 @@ public:
 
 public:
 
-	// 맨 초반 카메라 부분
+	// 카메라
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	class USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	class UCameraComponent* tpsCamComp;
+
+	// HP
+	float HP = 100;
 
 
 	// 이동
@@ -44,27 +47,16 @@ public:
 	FVector direction;
 
 	// 기타
-	// 총 스켈레탈메시
-	UPROPERTY(EditAnywhere, Category = GunMesh)
-	class USkeletalMeshComponent* gunMeshComp;
 	// 총알 공장
 	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
 	TSubclassOf<class ABullet> bulletFactory;
-	// 유탄총 사용 중인지 여부
-	bool bUsingGrenadeGun = true;
-	// 스나이퍼 조준 중인지 여부
-	bool bSniperAim = false;
+
 	// 총알 파편 효과 공장
 	UPROPERTY(EditAnywhere, Category = BulletEffect)
 	class UParticleSystem* bulletEffectFactory;
 
 
 	// UI
-	// 스나이퍼 UI 위젯 공장
-	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
-	TSubclassOf<class UUserWidget> sniperUIFactory;
-	// 스나이퍼 UI 위젯 인스턴스
-	class UUserWidget* _sniperUI;
 	// 일반 조준 크로스헤어UI 위젯
 	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
 	TSubclassOf<class UUserWidget> crosshairUIFactory;
@@ -90,21 +82,11 @@ public:
 	// 총알 발사 처리 함수
 	void InputFire();
 
-	/*
-	// 스나이퍼건 스태틱메시 추가
-	UPROPERTY(VisibleAnywhere, Category = GunMesh)
-	class UStaticMeshComponent* sniperGunComp;
-	*/
-	// 유탄총으로 변경
-	void ChangeToGrenadeGun();
-	// 스나이퍼건으로 변경
-	void ChangeToSniperGun();
-	// 스나이퍼 조준
-	void SniperAim();
-
 	// 스킬 & 아이템
 	// Q
-	void Q_Skill();
+	void Q1_Skill();
+	void Q2_Skill();
+	int32 Q = 0;
 	// W
 	void W1_Skill();
 	void W2_Skill();
@@ -113,17 +95,39 @@ public:
 	void E1_Skill();
 	void E2_Skill();
 	int32 E = 0;
-	ATPSPlayer* PlayerController;
+	//ATPSPlayer* PlayerController;
 	// R
 	void R1_Skill();
 	void R2_Skill();
 	int32 R = 0;
+	int Rrestrict = 2.5f;
 	// 아이템 1
 	void item1();
-	int32 i1 = 0;
+	float i1 = 0;
 	// 아이템 2
 	void item2();
-	int32 i2 = 0;
+	float i2 = 0;
+
+	// 쿨타임
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 bool
+		float Q_CoolTime1 = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 시간
+		float Q_CoolTime2 = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 bool
+		float W_CoolTime1 = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 시간
+		float W_CoolTime2 = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 bool
+		float E_CoolTime1 = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 시간
+		float E_CoolTime2 = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 bool
+	float R_CoolTime1 = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CooldTime")		// 쿨타임 시간
+	float R_CoolTime2 = 0;
 
 
 	// 파티클
@@ -139,5 +143,35 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "SkillEffects")
 	UParticleSystem* R_Particle;
+
+
+	// 애니메이션
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* N_Ani;
+	void Play_N_Ani();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* Q_Ani;
+	void Play_Q_Ani();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* W1_Ani;
+	void Play_W1_Ani();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* W2_Ani;
+	void Play_W2_Ani();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* E_Ani;
+	void Play_E_Ani();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* R1_Ani;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+	class UAnimationAsset* R2_Ani;
+	void Play_R1_Ani();
+	void Play_R2_Ani();
+
 
 };

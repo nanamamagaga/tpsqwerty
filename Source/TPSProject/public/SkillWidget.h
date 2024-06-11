@@ -7,7 +7,7 @@
 #include "SkillWidget.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class TPSPROJECT_API USkillWidget : public UUserWidget
@@ -17,6 +17,8 @@ class TPSPROJECT_API USkillWidget : public UUserWidget
 public:
 
 	// 프로그래스 바의 값을 설정하는 함수
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void SetProgressBarValue_HP(float Value);
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SetProgressBarValue_Q(float Value);
 	UFUNCTION(BlueprintCallable, Category = "UI")
@@ -31,6 +33,8 @@ public:
 	void SetProgressBarValue_I2(float Value);
 
 	UPROPERTY(meta = (BindWidget))
+	class UProgressBar* HP_ProgressBar;
+	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* Q_ProgressBar;
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* W_ProgressBar;
@@ -44,17 +48,33 @@ public:
 	class UProgressBar* I2_ProgressBar;
 
 
+
 	// 얘넨 전역 변수로 구현하는게 좋을듯
-	float Max = 100;
-	float Current_Q = 70;
-	float Current_W = 60;
-	float Current_E = 50;
-	float Current_R = 40;
-	float Current_I1 = 70;
-	float Current_I2 = 60;
+	float MaxHP = 100;
+	float MaxQ = 3;
+	float MaxW = 1.5;
+	float MaxE = 8;
+	float MaxR = 8;
+	float Max1 = 3;
+	float Max2 = 3;
+
+	float Current_HP = 100;
+	float Current_Q = 0;
+	float Current_W = 0;
+	float Current_E = 0;
+	float Current_R = 0;
+	float Current_I1;
+	float Current_I2;
+
+	float Q_CoolTime1;
+	float W_CoolTime1;
+	float E_CoolTime1;
+	float R_CoolTime1;
+
+	class ATPSPlayer* Player;
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-	
 };
