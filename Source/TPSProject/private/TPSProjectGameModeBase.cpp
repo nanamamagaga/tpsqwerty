@@ -7,6 +7,8 @@
 #include "NextPageWidget.h"
 #include "BossWidget.h"
 #include "SkillWidget.h"
+#include "SuccessWidget.h"
+#include "FailureWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,6 +44,7 @@ void ATPSProjectGameModeBase::ShowNext()
 	if (nextUI != nullptr)
 	{
 		nextUI->AddToViewport();
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
 	}
 }
@@ -68,5 +71,34 @@ void ATPSProjectGameModeBase::ShowSkill()
 	if (skillUI != nullptr)
 	{
 		skillUI->AddToViewport();
+	}
+}
+
+
+void ATPSProjectGameModeBase::ShowSuccess()
+{
+	if (successWidget != nullptr)
+	{
+		successUI = CreateWidget<USuccessWidget>(GetWorld(), successWidget);
+	}
+	if (successUI != nullptr)
+	{
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+		successUI->AddToViewport();
+	}
+}
+
+void ATPSProjectGameModeBase::ShowFail()
+{
+	if (failWidget != nullptr)
+	{
+		failUI = CreateWidget<UFailureWidget>(GetWorld(), failWidget);
+	}
+	if (failUI != nullptr)
+	{
+		failUI->AddToViewport();
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
 	}
 }

@@ -23,7 +23,7 @@ ATPSPlayer::ATPSPlayer()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-
+	
 
 	// TPS 카메라
 	// SpringArm 컴포넌트 붙이기
@@ -57,8 +57,12 @@ void ATPSPlayer::BeginPlay()
 	ATPSProjectGameModeBase* currentGameMode = Cast<ATPSProjectGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (currentGameMode != nullptr)
 	{
-		currentGameMode->ShowStart();
+		//currentGameMode->ShowStart();
+		//currentGameMode->ShowNext();
+		currentGameMode->ShowSuccess();
 	}
+
+
 	
 }
 
@@ -166,7 +170,7 @@ void ATPSPlayer::Tick(float DeltaTime)
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), R_Particle, nowLocation);
 
 		// 3. 이동할 위치 좌표를 구한다(p = p0 + vt).
-		FVector newLocation = GetActorLocation() + dir * 70;
+		FVector newLocation = GetActorLocation() + dir * 55;
 
 		//파티클 인스턴스 생성
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), R_Particle, newLocation);
@@ -407,7 +411,11 @@ void ATPSPlayer::item1()
 void ATPSPlayer::item2()
 {
 	if (i2 < 3) {
-		UE_LOG(LogTemp, Display, TEXT("Enemy Stun!"));
+		Q_CoolTime1 = 1;
+		W_CoolTime1 = 1;
+		E_CoolTime1 = 1;
+		R_CoolTime1 = 1;
+
 		i2++;
 	}
 }

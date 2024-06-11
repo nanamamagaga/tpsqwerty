@@ -32,6 +32,13 @@ public:
 	TSubclassOf<class USkillWidget> skillWidget;
 	void ShowSkill();
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class USuccessWidget> successWidget;
+	void ShowSuccess();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UFailureWidget> failWidget;
+	void ShowFail();
 protected:
 	//virtual void BeginPlay() override;
 
@@ -41,6 +48,8 @@ public:
 	class UNextPageWidget* nextUI;
 	class UBossWidget* bossUI;
 	class USkillWidget* skillUI;
+	class USuccessWidget* successUI;
+	class UFailureWidget* failUI;
 	ATPSProjectGameModeBase();
 
 };

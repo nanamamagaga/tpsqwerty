@@ -21,7 +21,6 @@ public:
 	UFUNCTION()
 	void Next();
 	
-	int32 CountMap = 0;
 
 protected:
 	virtual void NativeConstruct() override;

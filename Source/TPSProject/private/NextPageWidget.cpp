@@ -19,22 +19,9 @@ void UNextPageWidget::NativeConstruct()
 
 void UNextPageWidget::Next()
 {
-
-	// 여기서 글로벌 변수 CountMap을 제안한다.
-	// 한 페이지가 끝날 때마다 CountMap++;해주면 끝이다.
-	// if (CountMap == 3) UGameplayStatics::OpenLevel(GetWorld(), "Boss3"); 이런 식으로
-
-	CountMap++;
-
-	if(CountMap == 1)
-		UGameplayStatics::OpenLevel(GetWorld(), "Map1");
-	if(CountMap == 2)
-		UGameplayStatics::OpenLevel(GetWorld(), "Map2");
-	
-	// 안된다. 이유: 버튼은 1회용이였다...... 재활용할 순 없나? 다음 시간에
-	
-
-
+	ATPSProjectGameModeBase* GameMode = Cast<ATPSProjectGameModeBase>(UGameplayStatics::GetGameMode(this));
+	GameMode->nextUI->RemoveFromViewport();
+	UGameplayStatics::OpenLevel(GetWorld(), "Map2");
 	UGameplayStatics::SetGamePaused(GetWorld(), false);
 	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
 

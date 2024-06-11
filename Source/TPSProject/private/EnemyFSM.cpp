@@ -42,12 +42,15 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
     if (!bWhiteSphereExecuted)
     {
-        WhiteSphereState();
-        bWhiteSphereExecuted = true;
-        mState = EEnemyState::Idle;
-        return;
+        FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
+        if (CurrentLevelName == "Map1_2")
+        {
+            WhiteSphereState();
+            bWhiteSphereExecuted = true;
+            mState = EEnemyState::Idle;
+            return;
+        }
     }
-
     switch (mState)
     {
     case EEnemyState::Idle:

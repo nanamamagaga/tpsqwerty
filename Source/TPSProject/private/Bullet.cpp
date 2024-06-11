@@ -32,7 +32,7 @@ ABullet::ABullet()
 	// movement 컴포넌트가 갱신시킬 컴포넌트 지정
 	movementComp->SetUpdatedComponent(collisionComp);
 	// 초기속도
-	movementComp->InitialSpeed = 5000;
+	movementComp->InitialSpeed = 500;
 	// 최대속도
 	movementComp->MaxSpeed = 5000;
 	// 반동 여부
